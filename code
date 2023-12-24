@@ -214,7 +214,8 @@ function GetNumcode(input,givewhich) -- givewhich가 true면 폰의 속성 false
 	e = tonumber(e)
 	local q = 0
 	local a = 0
-	q, a = math.modf(e/10)
+	q = e % 10
+	a = e // 10
 	if givewhich then
 		return q
 	else
@@ -263,6 +264,20 @@ Screen:Connect("CursorPressed", function(cursor)
 								selectedOne = line1[e]
 								line1[e+1].BackgroundColor3 = Color3.fromRGB(0,0,0)
 							else
+								selectedOne.BackgroundColor3 = Color3.fromRGB(line1[e].BackgroundColor3.R+50,line1[e].BackgroundColor3.G+50,line1[e].BackgroundColor3.B+50)
+								selectedOne = line1[e]
+								line1[e].BackgroundColor3 = Color3.fromRGB(line1[e].BackgroundColor3.R+50,line1[e].BackgroundColor3.G+50,line1[e].BackgroundColor3.B+50)
+							end
+							if line1[e] == selectedOne then
+								line1[e].BackgroundColor3 = Color3.fromRGB(line1[e].BackgroundColor3.R+50,line1[e].BackgroundColor3.G+50,line1[e].BackgroundColor3.B+50)
+								selectedOne = nil
+							else
+								selectedOne.BackgroundColor3 = Color3.fromRGB(line1[e].BackgroundColor3.R+50,line1[e].BackgroundColor3.G+50,line1[e].BackgroundColor3.B+50)
+								line1[e].Image = selectedOne.Image
+								line1[e].ImageTransparency = selectedOne.ImageTransparency
+								
+								selectedOne = nil
+								
 							end
 						end
 					end
