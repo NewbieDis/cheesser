@@ -259,6 +259,7 @@ Screen:Connect("CursorPressed", function(cursor)
 				if AlreadyHaveCursorPeople[i][2].AbsolutePosition.X >= line1[e].AbsolutePosition.X and AlreadyHaveCursorPeople[i][2].AbsolutePosition.X <= line1[e].AbsolutePosition.X + line1[e].AbsoluteSize.X and AlreadyHaveCursorPeople[i][2].AbsolutePosition.Y >= line1[e].AbsolutePosition.Y and AlreadyHaveCursorPeople[i][2].AbsolutePosition.Y <= line1[e].AbsolutePosition.Y + line1[e].AbsoluteSize.Y then
 					if GetNumcode(line1[e].ImageTransparency,false) == whosturn then
 						if GetNumcode(line1[e].ImageTransparency,true) ~= 9 then
+							Bluescreen("hello")
 							if selectedOne == nil then
 								line1[e].BackgroundColor3 = Color3.fromRGB(line1[e].BackgroundColor3.R-50,line1[e].BackgroundColor3.G-50,line1[e].BackgroundColor3.B-50)
 								selectedOne = line1[e]
