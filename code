@@ -212,8 +212,8 @@ Getplrs()
 
 function GetNumcode(input,givewhich) -- givewhich가 true면 폰의 속성 false면 백/흑 여부
 	local e = string.split(tostring(input),".")[2]
-	e = tonumber(e)
 	Bluescreen(e)
+	e = tonumber(e)
 	local q = 0
 	local a = 0
 	q = e % 10
