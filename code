@@ -218,9 +218,9 @@ function GetNumcode(input,givewhich) -- givewhich가 true면 폰의 속성 false
 	q = e % 10
 	a = e // 10
 	if givewhich then
-		return q
+		Bluescreen(tostring(q) .. tostring(a))
 	else
-		return a
+		Bluescreen(tostring(q) .. tostring(a))
 	end
 end
 
