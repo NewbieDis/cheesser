@@ -262,7 +262,7 @@ Screen:Connect("CursorPressed", function(cursor)
 							if selectedOne == nil then
 								line1[e].BackgroundColor3 = Color3.fromRGB(line1[e].BackgroundColor3.R-50,line1[e].BackgroundColor3.G-50,line1[e].BackgroundColor3.B-50)
 								selectedOne = line1[e]
-								line1[e+1].BackgroundColor3 = Color3.fromRGB(0,0,0)
+								line1[e+8].BackgroundColor3 = Color3.fromRGB(0,0,0)
 								break
 							else
 								selectedOne.BackgroundColor3 = Color3.fromRGB(line1[e].BackgroundColor3.R+50,line1[e].BackgroundColor3.G+50,line1[e].BackgroundColor3.B+50)
