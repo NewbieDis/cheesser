@@ -30,6 +30,8 @@ local AlreadyHaveCursorPeople = {}
 ]]
 
 
+local v = Screen:CreateElement("TextLabel",{Size=UDim2.fromOffset(50,20);Text="V0.1.20"})
+
 function Bluescreen(err)
 	if alBLUE == false then
 		alBLUE = true
