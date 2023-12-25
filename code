@@ -211,16 +211,19 @@ Getplrs()
 
 
 function GetNumcode(input,givewhich) -- givewhich가 true면 폰의 속성 false면 백/흑 여부
-	local e = string.format("%.3f",tostring(input))
-	e = tonumber(e)
+	local e = tonumber(string.format("%.3f",tostring(line1[1].ImageTransparency))) * 1000
 	local q = 0
 	local a = 0
 	q = e % 10
 	a = e // 10
 	if givewhich then
-		
+		return q
 	else
-		
+		if a == 1 then
+			return true
+		else
+			return false
+		end
 	end
 end
 
@@ -254,7 +257,6 @@ Screen:Connect("CursorPressed", function(cursor)
 			end
 			for e=1,#line1 do
 				if AlreadyHaveCursorPeople[i][2].AbsolutePosition.X >= line1[e].AbsolutePosition.X and AlreadyHaveCursorPeople[i][2].AbsolutePosition.X <= line1[e].AbsolutePosition.X + line1[e].AbsoluteSize.X and AlreadyHaveCursorPeople[i][2].AbsolutePosition.Y >= line1[e].AbsolutePosition.Y and AlreadyHaveCursorPeople[i][2].AbsolutePosition.Y <= line1[e].AbsolutePosition.Y + line1[e].AbsoluteSize.Y then
-					Bluescreen(tonumber(string.format("%.3f",tostring(line1[1].ImageTransparency))))
 					if GetNumcode(line1[e].ImageTransparency,false) == whosturn then
 						if GetNumcode(line1[e].ImageTransparency,true) ~= 9 then
 							if selectedOne == nil then
