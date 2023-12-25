@@ -34,7 +34,7 @@ function Bluescreen(err)
 	if alBLUE == false then
 		alBLUE = true
 		Beep(1)
-		local all = Screen:CreateElement("TextLabel",{Size=UDim2.fromScale(1,1);BackgroundColor3=Color3.fromRGB(0,0,255);Text=err;TextColor3=Color3.fromRGB(255,255,255);TextScaled=true})
+		local all = Screen:CreateElement("TextLabel",{Size=UDim2.fromScale(1,1);BackgroundColor3=Color3.fromRGB(0,0,255);Text=err;TextColor3=Color3.fromRGB(255,255,255);TextScaled=true;Text="if you read this, bluescreen didn't work."})
 	end
 end
 function getAlpha(int)
