@@ -255,7 +255,7 @@ Screen:Connect("CursorPressed", function(cursor)
 			end
 			for e=1,#line1 do
 				if AlreadyHaveCursorPeople[i][2].AbsolutePosition.X >= line1[e].AbsolutePosition.X and AlreadyHaveCursorPeople[i][2].AbsolutePosition.X <= line1[e].AbsolutePosition.X + line1[e].AbsoluteSize.X and AlreadyHaveCursorPeople[i][2].AbsolutePosition.Y >= line1[e].AbsolutePosition.Y and AlreadyHaveCursorPeople[i][2].AbsolutePosition.Y <= line1[e].AbsolutePosition.Y + line1[e].AbsoluteSize.Y then
-					Bluescreen(GetNumcode(line1[e].ImageTransparency,false))
+					Bluescreen(line1[1].ImageTransparency)
 					if GetNumcode(line1[e].ImageTransparency,false) == whosturn then
 						if GetNumcode(line1[e].ImageTransparency,true) ~= 9 then
 							if selectedOne == nil then
