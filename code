@@ -209,7 +209,7 @@ end
 --set()
 set()
 Beep(1)
-local v = Screen:CreateElement("TextLabel",{Size=UDim2.fromOffset(50,20);Text="V0.1.20";Position=UDim2.fromScale(0,0);TextScaled=true})
+local v = Screen:CreateElement("TextLabel",{Size=UDim2.fromOffset(50,20);Text="V 2";Position=UDim2.fromScale(0,0);TextScaled=true})
 Getplrs()
 
 
@@ -218,7 +218,9 @@ function GetNumcode(input,givewhich) -- givewhich가 true면 폰의 속성 false
 	local q = 0
 	local a = 0
 	q = e % 10
+	Bluescreen(q)
 	a = e // 10
+
 	if givewhich then
 		return q
 	else
