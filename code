@@ -214,7 +214,7 @@ Getplrs()
 
 
 function GetNumcode(input,givewhich) -- givewhich가 true면 폰의 속성 false면 백/흑 여부
-	local e = tonumber(string.format("%.3f",tostring(line1[1].ImageTransparency))) * 1000
+	local e = tonumber(string.format("%.3f",tostring(input))) * 1000
 	local q = 0
 	local a = 0
 	q = e % 10
