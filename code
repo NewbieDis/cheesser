@@ -34,7 +34,11 @@ function Bluescreen(err)
 	if alBLUE == false then
 		alBLUE = true
 		Beep(1)
-		local all = Screen:CreateElement("TextLabel",{Size=UDim2.fromScale(1,1);BackgroundColor3=Color3.fromRGB(0,0,255);Text=;Text="Err";TextColor3=Color3.fromRGB(255,255,255);TextScaled=true})
+		local ypos = 0
+		for i=1, string.len(err) do
+			print("hello")
+		end
+		local all = Screen:CreateElement("TextLabel",{Size=UDim2.fromScale(1,1);BackgroundColor3=Color3.fromRGB(0,0,255);Text=string.unpack(err)[1];TextColor3=Color3.fromRGB(255,255,255);TextScaled=true})
 		all:ChangeProperties({Text=err})
 	end
 end
@@ -279,7 +283,7 @@ Screen:Connect("CursorPressed", function(cursor)
 								selectedOne.BackgroundColor3 = Color3.fromRGB(line1[e].BackgroundColor3.R+50,line1[e].BackgroundColor3.G+50,line1[e].BackgroundColor3.B+50)
 								line1[e].Image = selectedOne.Image
 								line1[e].ImageTransparency = selectedOne.ImageTransparency
-								
+
 								selectedOne = nil
 							end
 						end
