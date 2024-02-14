@@ -1,0 +1,302 @@
+local Screen = GetPartFromPort(1, "TouchScreen")
+
+local Gameready = false
+
+local whosturn = true --true는 백의 턴 false는 흑의 턴
+
+local temp = false
+local contact = nil
+
+local alBLUE = false
+
+local wh=nil
+local bl=nil
+
+local line1 = {}
+
+
+
+local AlreadyHaveCursorPeople = {}
+
+--[[여기서 잠깐! ImageTransparency == 0.01이면 백으로, 0.02면 흑으로 지정.
+0.0(숫자)1 : 폰
+0.0(숫자)2 : 비숍
+0.0(숫자)3 : 룩
+0.0(숫자)4 : 나이트
+0.0(숫자)5 : 퀸
+0.0(숫자)6 : 킹
+
+
+]]
+
+
+function Bluescreen(err)
+	if alBLUE == false then
+		alBLUE = true
+		Beep(1)
+		local all = Screen:CreateElement("TextLabel",{Size=UDim2.fromScale(1,1);BackgroundColor3=Color3.fromRGB(0,0,255);Text=err;TextColor3=Color3.fromRGB(255,255,255);TextScaled=true})
+	end
+end
+function getAlpha(int)
+	if int == 1 then
+		return "A"
+	elseif int == 2 then
+		return "B"
+	elseif int ==3 then
+		return "C"
+	elseif int == 4 then
+		return "D"
+	elseif int == 5 then
+		return "E"
+	elseif int == 6 then
+		return "F"
+	elseif int == 7 then
+		return "G"
+	else
+		return "H"
+	end
+end
+
+Screen:ClearElements()
+
+function Getplrs()
+	local suc,fai = pcall(function()
+		local getWhite = Screen:CreateElement("TextButton",{Text="White";TextScaled=true;Position = UDim2.fromOffset(100,50);Size=UDim2.fromOffset(200,50);BackgroundColor3=Color3.fromRGB(255,255,255);Rotation=180}) --
+		local getBlack = Screen:CreateElement("TextButton",{Text="Black";TextScaled=true;Position = UDim2.fromOffset(100,300);BackgroundColor3=Color3.fromRGB(0,0,0);TextColor3=Color3.fromRGB(255,255,255);Size=UDim2.fromOffset(200,50)})
+
+		getWhite.MouseButton1Down:Connect(function()
+			if wh == nil then
+				for i=1,#AlreadyHaveCursorPeople do
+					if AlreadyHaveCursorPeople[i][2].AbsolutePosition.X >= getWhite.AbsolutePosition.X and AlreadyHaveCursorPeople[i][2].AbsolutePosition.X <= getWhite.AbsolutePosition.X + getWhite.AbsoluteSize.X and AlreadyHaveCursorPeople[i][2].AbsolutePosition.Y >= getWhite.AbsolutePosition.Y and AlreadyHaveCursorPeople[i][2].AbsolutePosition.Y <= getWhite.AbsolutePosition.Y + getWhite.AbsoluteSize.Y then
+						wh = AlreadyHaveCursorPeople[i][1]
+						getWhite:ChangeProperties({Text=AlreadyHaveCursorPeople[i][1]})
+						if bl ~= nil and wh ~= nil then
+							wait(1)
+							getWhite:Destroy()
+							getBlack:Destroy()
+							Gameready = true
+						end
+					end 
+				end
+			end
+		end)
+
+		getBlack.MouseButton1Down:Connect(function()
+			if bl == nil then
+				for i=1,#AlreadyHaveCursorPeople do
+					if AlreadyHaveCursorPeople[i][2].AbsolutePosition.X >= getBlack.AbsolutePosition.X and AlreadyHaveCursorPeople[i][2].AbsolutePosition.X <= getBlack.AbsolutePosition.X + getBlack.AbsoluteSize.X and AlreadyHaveCursorPeople[i][2].AbsolutePosition.Y >= getBlack.AbsolutePosition.Y and AlreadyHaveCursorPeople[i][2].AbsolutePosition.Y <= getBlack.AbsolutePosition.Y + getBlack.AbsoluteSize.Y then
+						bl = AlreadyHaveCursorPeople[i][1]
+						getBlack:ChangeProperties({Text=AlreadyHaveCursorPeople[i][1]})
+						if bl ~= nil and wh ~= nil then
+							wait(1)
+							getWhite:Destroy()
+							getBlack:Destroy()
+							Gameready = true
+						end
+					end 
+				end
+			end
+		end)
+	end)
+	if suc then
+	else
+		Bluescreen(fai)
+	end
+end
+
+--local e = Screen:CreateElement("TextLabel",{Size = UDim2.fromScale(1,1)})
+--e:ChangeProperties({Text=e.AbsoluteSize.X .. e.AbsoluteSize.Y})
+
+function set()
+	for i=1,8 do
+		for e=1,8 do
+			if math.abs(i%2 - e%2) == 0 then
+				if i==2 then --폰
+					local e = Screen:CreateElement("ImageLabel",{Size = UDim2.fromOffset(50,50);Position=UDim2.fromOffset((e-1) * 50,(i-1) * 50);BackgroundColor3=Color3.fromRGB(255, 234, 171);Image = "http://www.roblox.com/asset/?id=12705284280";ImageTransparency = 0.011;Rotation=90})
+					table.insert(line1,e)
+				elseif i==1 and (e==1 or e==8) then -- 룩
+					local e = Screen:CreateElement("ImageLabel",{Size = UDim2.fromOffset(50,50);Position=UDim2.fromOffset((e-1) * 50,(i-1) * 50);BackgroundColor3=Color3.fromRGB(255, 234, 171);Image = "http://www.roblox.com/asset/?id=12705040502";ImageTransparency = 0.013;Rotation=90})
+					table.insert(line1,e)
+				elseif i==1 and (e==2 or e==7) then -- 나이트
+					local e = Screen:CreateElement("ImageLabel",{Size = UDim2.fromOffset(50,50);Position=UDim2.fromOffset((e-1) * 50,(i-1) * 50);BackgroundColor3=Color3.fromRGB(255, 234, 171);Image = "http://www.roblox.com/asset/?id=12582721685";ImageTransparency = 0.014;Rotation=90})
+					table.insert(line1,e)
+				elseif i==1 and (e==3 or e==6) then -- 비숍
+					local e = Screen:CreateElement("ImageLabel",{Size = UDim2.fromOffset(50,50);Position=UDim2.fromOffset((e-1) * 50,(i-1) * 50);BackgroundColor3=Color3.fromRGB(255, 234, 171);Image = "http://www.roblox.com/asset/?id=12705010496";ImageTransparency = 0.012;Rotation=90})
+					table.insert(line1,e)
+				elseif i==1 and e == 4 then -- 킹
+					local e = Screen:CreateElement("ImageLabel",{Size = UDim2.fromOffset(50,50);Position=UDim2.fromOffset((e-1) * 50,(i-1) * 50);BackgroundColor3=Color3.fromRGB(255, 234, 171);Image = "http://www.roblox.com/asset/?id=12705276436";ImageTransparency = 0.016;Rotation=90})
+					table.insert(line1,e)
+				elseif i==1 and e == 5 then -- 퀸
+					local e = Screen:CreateElement("ImageLabel",{Size = UDim2.fromOffset(50,50);Position=UDim2.fromOffset((e-1) * 50,(i-1) * 50);BackgroundColor3=Color3.fromRGB(255, 234, 171);Image = "http://www.roblox.com/asset/?id=12705266883";ImageTransparency = 0.015;Rotation=90})
+					table.insert(line1,e)
+				elseif i==7 then --폰(흑)
+					local e = Screen:CreateElement("ImageLabel",{Size = UDim2.fromOffset(50,50);Position=UDim2.fromOffset((e-1) * 50,(i-1) * 50);BackgroundColor3=Color3.fromRGB(255, 234, 171);Image = "http://www.roblox.com/asset/?id=12705284280";ImageTransparency = 0.011;ImageColor3= Color3.fromRGB(56, 56, 56);Rotation=90})
+					table.insert(line1,e)
+				elseif i==8 and (e==1 or e==8) then -- 룩
+					local e = Screen:CreateElement("ImageLabel",{Size = UDim2.fromOffset(50,50);Position=UDim2.fromOffset((e-1) * 50,(i-1) * 50);BackgroundColor3=Color3.fromRGB(255, 234, 171);Image = "http://www.roblox.com/asset/?id=12705040502";ImageTransparency = 0.013;ImageColor3= Color3.fromRGB(56, 56, 56);Rotation=90})
+					table.insert(line1,e)
+				elseif i==8 and (e==2 or e==7) then -- 나이트
+					local e = Screen:CreateElement("ImageLabel",{Size = UDim2.fromOffset(50,50);Position=UDim2.fromOffset((e-1) * 50,(i-1) * 50);BackgroundColor3=Color3.fromRGB(255, 234, 171);Image = "http://www.roblox.com/asset/?id=12582721685";ImageTransparency = 0.014;ImageColor3= Color3.fromRGB(56, 56, 56);Rotation=90})
+					table.insert(line1,e)
+				elseif i==8 and (e==3 or e==6) then -- 비숍
+					local e = Screen:CreateElement("ImageLabel",{Size = UDim2.fromOffset(50,50);Position=UDim2.fromOffset((e-1) * 50,(i-1) * 50);BackgroundColor3=Color3.fromRGB(255, 234, 171);Image = "http://www.roblox.com/asset/?id=12705010496";ImageTransparency = 0.012;ImageColor3= Color3.fromRGB(56, 56, 56);Rotation=90})
+					table.insert(line1,e)
+				elseif i==8 and e == 5 then -- 킹
+					local e = Screen:CreateElement("ImageLabel",{Size = UDim2.fromOffset(50,50);Position=UDim2.fromOffset((e-1) * 50,(i-1) * 50);BackgroundColor3=Color3.fromRGB(255, 234, 171);Image = "http://www.roblox.com/asset/?id=12705276436";ImageTransparency = 0.016;ImageColor3= Color3.fromRGB(56, 56, 56);Rotation=90})
+					table.insert(line1,e)
+				elseif i==8 and e == 4 then -- 퀸
+					local e = Screen:CreateElement("ImageLabel",{Size = UDim2.fromOffset(50,50);Position=UDim2.fromOffset((e-1) * 50,(i-1) * 50);BackgroundColor3=Color3.fromRGB(255, 234, 171);Image = "http://www.roblox.com/asset/?id=12705266883";ImageTransparency = 0.015;ImageColor3= Color3.fromRGB(56, 56, 56);Rotation=90})
+					table.insert(line1,e)
+				else
+					local e = Screen:CreateElement("ImageLabel",{Size = UDim2.fromOffset(50,50);Position=UDim2.fromOffset((e-1) * 50,(i-1) * 50);BackgroundColor3=Color3.fromRGB(255, 234, 171);Image = "http://www.roblox.com/asset/?id=0";ImageTransparency = 0.019;ImageColor3= Color3.fromRGB(56, 56, 56);Rotation=90})
+					table.insert(line1,e)
+				end
+
+			else
+				if i==2 then -- 폰
+					local e = Screen:CreateElement("ImageLabel",{Size = UDim2.fromOffset(50,50);Position=UDim2.fromOffset((e-1) * 50,(i-1) * 50);BackgroundColor3=Color3.fromRGB(135, 191, 93);Image = "http://www.roblox.com/asset/?id=12705284280";ImageTransparency = 0.011;Rotation=90})
+					table.insert(line1,e)
+				elseif i==1 and (e==1 or e==8) then -- 룩
+					local e = Screen:CreateElement("ImageLabel",{Size = UDim2.fromOffset(50,50);Position=UDim2.fromOffset((e-1) * 50,(i-1) * 50);BackgroundColor3=Color3.fromRGB(135, 191, 93);Image = "http://www.roblox.com/asset/?id=12705040502";ImageTransparency = 0.013;Rotation=90})
+					table.insert(line1,e)
+				elseif i==1 and (e==2 or e==7) then -- 나이트
+					local e = Screen:CreateElement("ImageLabel",{Size = UDim2.fromOffset(50,50);Position=UDim2.fromOffset((e-1) * 50,(i-1) * 50);BackgroundColor3=Color3.fromRGB(135, 191, 93);Image = "http://www.roblox.com/asset/?id=12582721685";ImageTransparency = 0.014;Rotation=90})
+					table.insert(line1,e)
+				elseif i==1 and (e==3 or e==6) then -- 비숍
+					local e = Screen:CreateElement("ImageLabel",{Size = UDim2.fromOffset(50,50);Position=UDim2.fromOffset((e-1) * 50,(i-1) * 50);BackgroundColor3=Color3.fromRGB(135, 191, 93);Image = "http://www.roblox.com/asset/?id=12705010496";ImageTransparency = 0.012;Rotation=90})
+					table.insert(line1,e)
+				elseif i==1 and e == 4 then -- 킹
+					local e = Screen:CreateElement("ImageLabel",{Size = UDim2.fromOffset(50,50);Position=UDim2.fromOffset((e-1) * 50,(i-1) * 50);BackgroundColor3=Color3.fromRGB(135, 191, 93);Image = "http://www.roblox.com/asset/?id=12705276436";ImageTransparency = 0.016;Rotation=90})
+					table.insert(line1,e)
+				elseif i==1 and e == 5 then -- 퀸
+					local e = Screen:CreateElement("ImageLabel",{Size = UDim2.fromOffset(50,50);Position=UDim2.fromOffset((e-1) * 50,(i-1) * 50);BackgroundColor3=Color3.fromRGB(135, 191, 93);Image = "http://www.roblox.com/asset/?id=12705266883";ImageTransparency = 0.015;Rotation=90})
+					table.insert(line1,e)
+				elseif i==7 then -- 폰
+					local e = Screen:CreateElement("ImageLabel",{Size = UDim2.fromOffset(50,50);Position=UDim2.fromOffset((e-1) * 50,(i-1) * 50);BackgroundColor3=Color3.fromRGB(135, 191, 93);Image = "http://www.roblox.com/asset/?id=12705284280";ImageTransparency = 0.011;ImageColor3= Color3.fromRGB(56, 56, 56);Rotation=90})
+					table.insert(line1,e)
+				elseif i==8 and (e==1 or e==8) then -- 룩
+					local e = Screen:CreateElement("ImageLabel",{Size = UDim2.fromOffset(50,50);Position=UDim2.fromOffset((e-1) * 50,(i-1) * 50);BackgroundColor3=Color3.fromRGB(135, 191, 93);Image = "http://www.roblox.com/asset/?id=12705040502";ImageTransparency = 0.013;ImageColor3= Color3.fromRGB(56, 56, 56);Rotation=90})
+					table.insert(line1,e)
+				elseif i==8 and (e==2 or e==7) then -- 나이트
+					local e = Screen:CreateElement("ImageLabel",{Size = UDim2.fromOffset(50,50);Position=UDim2.fromOffset((e-1) * 50,(i-1) * 50);BackgroundColor3=Color3.fromRGB(135, 191, 93);Image = "http://www.roblox.com/asset/?id=12582721685";ImageTransparency = 0.014;ImageColor3= Color3.fromRGB(56, 56, 56);Rotation=90})
+					table.insert(line1,e)
+				elseif i==8 and (e==3 or e==6) then -- 비숍
+					local e = Screen:CreateElement("ImageLabel",{Size = UDim2.fromOffset(50,50);Position=UDim2.fromOffset((e-1) * 50,(i-1) * 50);BackgroundColor3=Color3.fromRGB(135, 191, 93);Image = "http://www.roblox.com/asset/?id=12705010496";ImageTransparency = 0.012;ImageColor3= Color3.fromRGB(56, 56, 56);Rotation=90})
+					table.insert(line1,e)
+				elseif i==8 and e == 5 then -- 킹
+					local e = Screen:CreateElement("ImageLabel",{Size = UDim2.fromOffset(50,50);Position=UDim2.fromOffset((e-1) * 50,(i-1) * 50);BackgroundColor3=Color3.fromRGB(135, 191, 93);Image = "http://www.roblox.com/asset/?id=12705276436";ImageTransparency = 0.016;ImageColor3= Color3.fromRGB(56, 56, 56);Rotation=90})
+					table.insert(line1,e)
+				elseif i==8 and e == 4 then -- 퀸
+					local e = Screen:CreateElement("ImageLabel",{Size = UDim2.fromOffset(50,50);Position=UDim2.fromOffset((e-1) * 50,(i-1) * 50);BackgroundColor3=Color3.fromRGB(135, 191, 93);Image = "http://www.roblox.com/asset/?id=12705266883";ImageTransparency = 0.015;ImageColor3= Color3.fromRGB(56, 56, 56);Rotation=90})
+					table.insert(line1,e)
+				else
+					local e = Screen:CreateElement("ImageLabel",{Size = UDim2.fromOffset(50,50);Position=UDim2.fromOffset((e-1) * 50,(i-1) * 50);BackgroundColor3=Color3.fromRGB(135, 191, 93);Image = "http://www.roblox.com/asset/?id=0";ImageTransparency = 0.019;ImageColor3= Color3.fromRGB(56, 56, 56);Rotation=90})
+					table.insert(line1,e)
+				end -- 135, 191, 93
+			end
+
+		end
+	end
+	if contact then
+		contact:Destroy()
+	end
+	--contact = Screen:CreateElement("TextButton",{Size= UDim2.fromScale(1,1);BackgroundTransparency=1})
+end
+
+--set()
+set()
+Beep(1)
+Getplrs()
+
+
+function GetNumcode(input,givewhich) -- givewhich가 true면 폰의 속성 false면 백/흑 여부
+	local e = tostring(input)
+	if givewhich then
+		return tonumber(string.sub(5,5))
+	else
+		if tonumber(string.sub(4,4)) == 1 then
+			return true
+		else
+			return false
+		end
+	end
+end
+
+--[[여기서 잠깐! ImageTransparency == 0.01이면 백으로, 0.02면 흑으로 지정.
+0.0(숫자)1 : 폰
+0.0(숫자)2 : 비숍
+0.0(숫자)3 : 룩
+0.0(숫자)4 : 나이트
+0.0(숫자)5 : 퀸
+0.0(숫자)6 : 킹
+0.0(숫자)7 : 폰(이미 2칸 움직임 혹은 2칸 대신 1칸 움직임)
+0.0(숫자)8 : 이미 캐슬링을 한 킹
+0.0(숫자)9 : 없을 무
+
+]]
+
+local selectedOne = nil
+
+Screen:Connect("CursorPressed", function(cursor)
+	if Gameready then
+		local suc,fail = pcall(function()
+			local found =false
+			local have = nil
+			local i = 1
+			for i=1,#AlreadyHaveCursorPeople do
+				if AlreadyHaveCursorPeople[i][1] == cursor.Player then
+					have = AlreadyHaveCursorPeople[i][2]
+					found =true
+					break
+				end
+			end
+			for e=1,#line1 do
+				if AlreadyHaveCursorPeople[i][2].AbsolutePosition.X >= line1[e].AbsolutePosition.X and AlreadyHaveCursorPeople[i][2].AbsolutePosition.X <= line1[e].AbsolutePosition.X + line1[e].AbsoluteSize.X and AlreadyHaveCursorPeople[i][2].AbsolutePosition.Y >= line1[e].AbsolutePosition.Y and AlreadyHaveCursorPeople[i][2].AbsolutePosition.Y <= line1[e].AbsolutePosition.Y + line1[e].AbsoluteSize.Y then
+					-- givewhich가 true면 폰의 속성 false면 백/흑 여부
+					local bool = GetNumcode(line1[e].ImageTransparency,false)
+					print("chesser: " .. bool)
+					if bool then
+						if cursor.Player == wh and whosturn == true then
+							if selectedOne == nil then
+								selectedOne = line1[e]
+								selectedOne:ChangeProperties({BackgroundTransparency=0.5})
+							end
+						end
+					else
+						if cursor.Player == bl and whosturn == false then
+							if selectedOne == nil then
+								selectedOne = line1[e]
+								selectedOne:ChangeProperties({BackgroundTransparency=0.5})
+							end
+						end
+					end
+				end
+			end
+		end)
+		if suc then
+		else
+			Bluescreen(fail)
+		end
+	end
+end)
+
+Screen:Connect("CursorMoved",function(cursor)
+	local found =false
+	local have = nil
+	local i = 0
+	for i=1,#AlreadyHaveCursorPeople do
+		if AlreadyHaveCursorPeople[i][1] == cursor.Player then
+			have = AlreadyHaveCursorPeople[i][2]
+			found = true
+			break
+		end
+	end
+	if found then
+		--task.wait()
+		have:ChangeProperties({Position=UDim2.new(0,cursor.X,0,cursor.Y)})
+	else
+		local show = Screen:CreateElement("TextLabel",{Size=UDim2.fromScale(0,0);TextSize=0;Text=cursor.Player;TextColor3=Color3.fromRGB(255,255,255);Position=UDim2.fromOffset(0,0);TextTransparency=1;BackgroundTransparency=1})
+		table.insert(AlreadyHaveCursorPeople,{cursor.Player,show})
+		table.remove(AlreadyHaveCursorPeople,i)
+	end
+end)
