@@ -34,8 +34,7 @@ function Bluescreen(err)
 	if alBLUE == false then
 		alBLUE = true
 		Beep(1)
-		local all = Screen:CreateElement("TextLabel",{Size=UDim2.fromScale(1,1);BackgroundColor3=Color3.fromRGB(0,0,255);Text=404;TextColor3=Color3.fromRGB(255,255,255);TextScaled=true})
-		all:ChangeProperties({Text=err})
+		local all = Screen:CreateElement("TextLabel",{Size=UDim2.fromScale(1,1);BackgroundColor3=Color3.fromRGB(0,0,255);Text=err;TextColor3=Color3.fromRGB(255,255,255);TextScaled=true})
 	end
 end
 function getAlpha(int)
@@ -195,11 +194,9 @@ function set()
 					table.insert(line1,e)
 				end -- 135, 191, 93
 			end
-		
+
 		end
 	end
-
-
 	if contact then
 		contact:Destroy()
 	end
@@ -209,18 +206,16 @@ end
 --set()
 set()
 Beep(1)
-local v = Screen:CreateElement("TextLabel",{Size=UDim2.fromOffset(50,20);Text="V 2";Position=UDim2.fromScale(0,0);TextScaled=true})
 Getplrs()
 
 
 function GetNumcode(input,givewhich) -- givewhich가 true면 폰의 속성 false면 백/흑 여부
-	local e = tonumber(string.format("%.3f",tostring(input))) * 1000
+	local e = string.split(tostring(input),".")[2]
+	e = tonumber(e)
 	local q = 0
 	local a = 0
 	q = e % 10
-	Bluescreen(q)
 	a = e // 10
-
 	if givewhich then
 		return q
 	else
@@ -267,10 +262,10 @@ Screen:Connect("CursorPressed", function(cursor)
 							if selectedOne == nil then
 								line1[e].BackgroundColor3 = Color3.fromRGB(line1[e].BackgroundColor3.R-50,line1[e].BackgroundColor3.G-50,line1[e].BackgroundColor3.B-50)
 								selectedOne = line1[e]
-								line1[e+8].BackgroundColor3 = Color3.fromRGB(0,0,0)
+								line1[e+1].BackgroundColor3 = Color3.fromRGB(0,0,0)
 								break
 							else
-								selectedOne.BackgroundColor3 = Color3.fromRGB(selectedOne.BackgroundColor3.R+50,selectedOne.BackgroundColor3.G+50,selectedOne.BackgroundColor3.B+50)
+								selectedOne.BackgroundColor3 = Color3.fromRGB(line1[e].BackgroundColor3.R+50,line1[e].BackgroundColor3.G+50,line1[e].BackgroundColor3.B+50)
 								selectedOne = line1[e]
 								line1[e].BackgroundColor3 = Color3.fromRGB(line1[e].BackgroundColor3.R+50,line1[e].BackgroundColor3.G+50,line1[e].BackgroundColor3.B+50)
 								break
@@ -278,12 +273,14 @@ Screen:Connect("CursorPressed", function(cursor)
 							if line1[e] == selectedOne then
 								line1[e].BackgroundColor3 = Color3.fromRGB(line1[e].BackgroundColor3.R+50,line1[e].BackgroundColor3.G+50,line1[e].BackgroundColor3.B+50)
 								selectedOne = nil
+								break
 							else
 								selectedOne.BackgroundColor3 = Color3.fromRGB(line1[e].BackgroundColor3.R+50,line1[e].BackgroundColor3.G+50,line1[e].BackgroundColor3.B+50)
 								line1[e].Image = selectedOne.Image
 								line1[e].ImageTransparency = selectedOne.ImageTransparency
-
+								
 								selectedOne = nil
+								break
 							end
 						end
 					end
