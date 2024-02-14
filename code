@@ -210,16 +210,11 @@ Getplrs()
 
 
 function GetNumcode(input,givewhich) -- givewhich가 true면 폰의 속성 false면 백/흑 여부
-	local e = string.split(tostring(input),".")[2]
-	e = tonumber(e)
-	local q = 0
-	local a = 0
-	q = e % 10
-	a = e // 10
+	local e = tostring(input)
 	if givewhich then
-		return q
+		return tonumber(string.sub(5,5))
 	else
-		if a == 1 then
+		if tonumber(string.sub(4,4)) == 1 then
 			return true
 		else
 			return false
@@ -257,30 +252,20 @@ Screen:Connect("CursorPressed", function(cursor)
 			end
 			for e=1,#line1 do
 				if AlreadyHaveCursorPeople[i][2].AbsolutePosition.X >= line1[e].AbsolutePosition.X and AlreadyHaveCursorPeople[i][2].AbsolutePosition.X <= line1[e].AbsolutePosition.X + line1[e].AbsoluteSize.X and AlreadyHaveCursorPeople[i][2].AbsolutePosition.Y >= line1[e].AbsolutePosition.Y and AlreadyHaveCursorPeople[i][2].AbsolutePosition.Y <= line1[e].AbsolutePosition.Y + line1[e].AbsoluteSize.Y then
-					if GetNumcode(line1[e].ImageTransparency,false) == whosturn then
-						if GetNumcode(line1[e].ImageTransparency,true) ~= 9 then
+					-- givewhich가 true면 폰의 속성 false면 백/흑 여부
+					local bool = GetNumcode(line1[e].ImageTransparency,false)
+					if bool then
+						if cursor.Player == wh then
 							if selectedOne == nil then
-								line1[e].BackgroundColor3 = Color3.fromRGB(line1[e].BackgroundColor3.R-50,line1[e].BackgroundColor3.G-50,line1[e].BackgroundColor3.B-50)
 								selectedOne = line1[e]
-								line1[e+1].BackgroundColor3 = Color3.fromRGB(0,0,0)
-								break
-							else
-								selectedOne.BackgroundColor3 = Color3.fromRGB(line1[e].BackgroundColor3.R+50,line1[e].BackgroundColor3.G+50,line1[e].BackgroundColor3.B+50)
-								selectedOne = line1[e]
-								line1[e].BackgroundColor3 = Color3.fromRGB(line1[e].BackgroundColor3.R+50,line1[e].BackgroundColor3.G+50,line1[e].BackgroundColor3.B+50)
-								break
+								selectedOne:ChangeProperties({BackgroundColor3 = Color3.fromRGB(selectedOne.BackgroundColor3.R-50,selectedOne.BackgroundColor3.G-50,selectedOne.BackgroundColor3.B-50)})
 							end
-							if line1[e] == selectedOne then
-								line1[e].BackgroundColor3 = Color3.fromRGB(line1[e].BackgroundColor3.R+50,line1[e].BackgroundColor3.G+50,line1[e].BackgroundColor3.B+50)
-								selectedOne = nil
-								break
-							else
-								selectedOne.BackgroundColor3 = Color3.fromRGB(line1[e].BackgroundColor3.R+50,line1[e].BackgroundColor3.G+50,line1[e].BackgroundColor3.B+50)
-								line1[e].Image = selectedOne.Image
-								line1[e].ImageTransparency = selectedOne.ImageTransparency
-								
-								selectedOne = nil
-								break
+						end
+					else
+						if cursor.Player == bl then
+							if selectedOne == nil then
+								selectedOne = line1[e]
+								selectedOne:ChangeProperties({BackgroundColor3 = Color3.fromRGB(selectedOne.BackgroundColor3.R-50,selectedOne.BackgroundColor3.G-50,selectedOne.BackgroundColor3.B-50)})
 							end
 						end
 					end
