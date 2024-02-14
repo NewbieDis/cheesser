@@ -258,14 +258,14 @@ Screen:Connect("CursorPressed", function(cursor)
 						if cursor.Player == wh then
 							if selectedOne == nil then
 								selectedOne = line1[e]
-								selectedOne:ChangeProperties({BackgroundColor3 = Color3.fromRGB(selectedOne.BackgroundColor3.R-50,selectedOne.BackgroundColor3.G-50,selectedOne.BackgroundColor3.B-50)})
+								selectedOne:ChangeProperties({BackgroundColor3 = Color3.fromRGB(selectedOne.BackgroundColor3.R-25,selectedOne.BackgroundColor3.G-25,selectedOne.BackgroundColor3.B-25)})
 							end
 						end
 					else
 						if cursor.Player == bl then
 							if selectedOne == nil then
 								selectedOne = line1[e]
-								selectedOne:ChangeProperties({BackgroundColor3 = Color3.fromRGB(selectedOne.BackgroundColor3.R-50,selectedOne.BackgroundColor3.G-50,selectedOne.BackgroundColor3.B-50)})
+								selectedOne:ChangeProperties({BackgroundColor3 = Color3.fromRGB(selectedOne.BackgroundColor3.R-25,selectedOne.BackgroundColor3.G-25,selectedOne.BackgroundColor3.B-25)})
 							end
 						end
 					end
